@@ -1,0 +1,21 @@
+Part A(2):
+
+2)  For  the  first  3  transactions  after  the  TCP  connection  is  set  up  (in  both  directions 
+combined), explain the values of the Sequence number, Ack number, and Window size. 
+
+Answer:
+
+Sequence number:
+This number on the packet is the packet number for which the receiving end is waiting for. This is equal to the ack number received from the server for last packet. The client adds this to the next packet. The server after receiving it sends ack = seq no + no. of bytes.
+
+Ack number:
+This number on the packet states the sequence number on the next packet expected by the sending end (i.e the server expects the ack no it sends as the sequence number of the next packet from the client). The receiver(client) on parsing the data uses the ack number as the sequence number of the next packet. 
+
+
+Window size:
+This is the maximum window size which a receiver demands from the sender end. The receiver sends preffered window size with acknowledgement to previous received packet. Receiver end may vary the window size based on some priority or network congestion.
+
+Using these numbers the two end identifies any out of order or missing packet.
+
+
+		Ack number =  Sequence number + Window size

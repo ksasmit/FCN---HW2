@@ -1,0 +1,60 @@
+Part C(2): 
+After the TCP connection has been established, compute  the  first 3 retransmission
+timeout values estimated at  the HTTP client. You need  to  follow RFC 6298  to estimate 
+the retransmission timeout (https://tools.ietf.org/html/rfc6298). Assume G = 1 second.
+
+Solution:
+	
+According to RFC 6298,
+
+
+		R: RTT for the first rount trip
+		RTO (retransmission timeout)
+		SRTT (Smoothed RTT) and RTTVAR (round-trip timer variation). 
+		
+				
+When the first RTT measurement R is made, the host MUST set
+
+            SRTT <- R
+            RTTVAR <- R/2
+            RTO <- SRTT + max (G, K*RTTVAR)
+
+		where K = 4 and G = 1 assumed as required.
+		
+		RTO <- SRTT + max (1, 4*RTTVAR)
+											
+When a subsequent RTT measurement R' is made, a host MUST set
+
+            RTTVAR <- (1 - beta) * RTTVAR + beta * |SRTT - R'|
+            SRTT <- (1 - alpha) * SRTT + alpha * R'
+		
+The value of SRTT used in the update to RTTVAR is its value
+before updating SRTT itself using the second assignment.  That
+is, updating RTTVAR and SRTT MUST be computed in the above
+order.
+
+The above SHOULD be computed using alpha=1/8 and beta=1/4 as shown below:
+			        
+		R = 2 ms;
+		1st RTO:
+		
+			SRTT = 2;
+			RTTVAR = 1;
+			RTO = 2 + max(1,4*1)
+			RTO = 6
+			
+		2nd RTO:
+		
+			RTTVAR = (1-1/8)*1 + 1/4(2-2) = 1
+			SRTT = (1-1/8)*2 + 1/8*2 = (7*)/4 + 1/4 = 2
+			RTO = 2 + max(1,4*1) = 6
+			
+		3rd RTO:
+		
+			RTTVAR = (1-1/8)*1 + 1/4(2-2) = 1
+			SRTT = (1-1/8)*2 + 1/8*2 = (7*)/4 + 1/4 = 2
+			RTO = 2 + max(1,4*1) = 6
+			
+			
+			
+=====================================================================================================================

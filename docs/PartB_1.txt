@@ -1,0 +1,12 @@
+Part B(1): 
+What kind of HTTP protocol are the two files using (HTTP 1.0, HTTP persistent connection, HTTP parallelization, HTTP pipelining, HTTP 2.0)? Explain your answer. 
+
+Solution:
+1."SampleA.pcap" : HTTP 1.1, HTTP persistent, HTTP parallelization
+
+There are multiple connections in "SampleA.pcap". As can be seen that many connections are being established to the same destination address and port number from different port numbers from the source and they are being made parallely. So it has HTTP parallel requests/response. Also once the connection is established, there are multiple request and response between server and client without breaking or re establishing the connection. So it is Persistent connection. HTTP 1.1 supports both of these features and . The http version can be printed programmatically using the API http.fieldValue(Http.Request.RequestVersion) and http.fieldValue(Http.Response.RequestVersion) in JAVA or can be seen using wireshark filter.
+
+2."SampleB.pcap":  persistent,  pipelining
+
+ persistent because there are multiple request and response between server and client without breaking or re establishing the connection.
+There is only a single connection in "SampleB.pcap". Requests and response are between the same source and destinations and both on the same port number so it is pipelining. This packet has no HTTP information.
